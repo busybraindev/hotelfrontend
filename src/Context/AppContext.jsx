@@ -21,6 +21,7 @@ export const AppProvider = ({ children }) => {
   const [shg, sshg] = useState(false);
   const [sc, ssc] = useState([]);
   const [rm, srm] = useState([]);
+  axios.defaults.withCredentials = true;
   const fr = async () => {
     try {
       const { data } = await axios.get("/api/room/");
@@ -34,7 +35,6 @@ export const AppProvider = ({ children }) => {
     }
   };
   const ft = async () => {
-    axios.defaults.withCredentials = true;
     try {
       const { data } = await axios.get("/api/user");
 
