@@ -4,7 +4,7 @@ import { assets, dashboardDummyData } from "../../assets/assets/assets";
 import { useAppContext } from "../../Context/AppContext";
 
 const Dh = () => {
-  const { currency, user, toast, axios } = useAppContext();
+  const { currency, user, toast, axios, getToken } = useAppContext();
   const [dt, sdt] = useState({
     bookings: [],
     totalBookings: 0,
@@ -13,7 +13,15 @@ const Dh = () => {
 
   const fd = async () => {
     try {
-      const { data } = await axios.get("/api/bookings/hotel");
+      const token = await getToken();
+
+      if (!token) {
+        console.log("Token not ready !!");
+        return;
+      }
+      const { data } = await axios.get("/api/bookings/hotel", {
+        headers: `Authorization : Bearer ${token}`,
+      });
 
       if (data.success) {
         sdt(data.dashboardData);

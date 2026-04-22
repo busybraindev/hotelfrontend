@@ -14,22 +14,33 @@ const Rd = () => {
   const { id } = useParams();
   const [rmm, srm] = useState(null);
   const [mm, smm] = useState(null);
-  const { rm, axios, nav } = useAppContext();
+  const { rm, axios, nav, getToken } = useAppContext();
   const [cd, scd] = useState(null);
   const [ct, sct] = useState(null);
   const [gt, sgt] = useState(1);
   const [isv, sisv] = useState(false);
   const chk = async () => {
     try {
+      const token = await getToken();
+      console.log(token);
+
+      if (!token) {
+        console.log("Token not ready !!");
+        return;
+      }
       if (cd >= ct) {
         toast.error("Check-In Date should be less than Check-out Date");
         return;
       }
-      const { data } = await axios.post("/api/bookings/check-availability", {
-        room: id,
-        checkInDate: cd,
-        checkOutDate: ct,
-      });
+      const { data } = await axios.post(
+        "/api/bookings/check-availability",
+        {
+          room: id,
+          checkInDate: cd,
+          checkOutDate: ct,
+        },
+        { headers: `Authorization : Bearer ${token}` },
+      );
       console.log(data);
 
       if (data.success) {
@@ -51,16 +62,26 @@ const Rd = () => {
   const sb = async (e) => {
     e.preventDefault();
     try {
+      const token = await getToken();
+
+      if (!token) {
+        console.log("Token not ready !!");
+        return;
+      }
       if (!isv) {
         return chk();
       } else {
-        const { data } = await axios.post("/api/bookings/book", {
-          room: id,
-          checkInDate: cd,
-          checkOutDate: ct,
-          guests: gt,
-          paymentMethod: "Pay At Hotel",
-        });
+        const { data } = await axios.post(
+          "/api/bookings/book",
+          {
+            room: id,
+            checkInDate: cd,
+            checkOutDate: ct,
+            guests: gt,
+            paymentMethod: "Pay At Hotel",
+          },
+          { headers: `Authorization : Bearer ${token}` },
+        );
         console.log(data);
 
         if (data.success) {

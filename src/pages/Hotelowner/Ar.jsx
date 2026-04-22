@@ -37,6 +37,12 @@ const Ar = () => {
     }
     sld(true);
     try {
+      const token = await getToken();
+
+      if (!token) {
+        console.log("Token not ready !!");
+        return;
+      }
       const formData = new FormData();
       formData.append("roomType", ip.roomType);
       formData.append("pricePerNight", ip.pricePerNight);
@@ -48,7 +54,9 @@ const Ar = () => {
         im[key] && formData.append("images", im[key]);
       });
 
-      const { data } = await axios.post("/api/room/", formData);
+      const { data } = await axios.post("/api/room/", formData, {
+        headers: `Authorization : Bearer ${token}`,
+      });
       console.log(data);
 
       if (data.success) {

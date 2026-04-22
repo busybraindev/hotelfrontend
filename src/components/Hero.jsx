@@ -4,11 +4,22 @@ import { useAppContext } from "../Context/AppContext";
 
 const Hero = () => {
   const [dt, std] = useState("");
-  const { nav, axios, ssc } = useAppContext();
+  const { nav, axios, ssc, getToken } = useAppContext();
   const onSearch = async (e) => {
     e.preventDefault();
+    const token = await getToken();
+    console.log(token);
+
+    if (!token) {
+      console.log("Token not ready !!");
+      return;
+    }
     nav(`/rooms?destination=${dt}`);
-    await axios.post("/api/user/store", { recentSearchedCities: dt });
+    await axios.post(
+      "/api/user/store",
+      { recentSearchedCities: dt },
+      { headers: `Authorization : Bearer ${token}` },
+    );
     ssc((pv) => {
       const nw = [...pv, dt];
       if (nw.length > 3) {

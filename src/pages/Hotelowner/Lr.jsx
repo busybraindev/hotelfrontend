@@ -6,10 +6,18 @@ import toast from "react-hot-toast";
 
 const Lr = () => {
   const [rm, srm] = useState([]);
-  const { axios, user, currency } = useAppContext();
+  const { axios, user, currency, getToken } = useAppContext();
   const ft = async () => {
     try {
-      const { data } = await axios.get("/api/room/owner");
+      const token = await getToken();
+
+      if (!token) {
+        console.log("Token not ready !!");
+        return;
+      }
+      const { data } = await axios.get("/api/room/owner", {
+        headers: `Authorization : Bearer ${token}`,
+      });
       console.log(data);
 
       if (data.success) {
@@ -23,9 +31,13 @@ const Lr = () => {
     }
   };
   const tg = async (roomId) => {
-    const { data } = await axios.post("/api/room/toogle-availability", {
-      roomId,
-    });
+    const { data } = await axios.post(
+      "/api/room/toogle-availability",
+      {
+        roomId,
+      },
+      { headers: `Authorization : Bearer ${token}` },
+    );
     if (data.success) {
       toast.success(data.message);
       ft();

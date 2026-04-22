@@ -4,11 +4,20 @@ import { assets, userBookingsDummyData } from "../assets/assets/assets";
 import { useAppContext } from "../Context/AppContext";
 import toast from "react-hot-toast";
 const Mybook = () => {
-  const { axios, user } = useAppContext();
+  const { axios, user, getToken } = useAppContext();
   const [bk, sbk] = useState([]);
   const fb = async () => {
     try {
-      const { data } = await axios.get("/api/bookings/user");
+      const token = await getToken();
+      console.log(token);
+
+      if (!token) {
+        console.log("Token not ready !!");
+        return;
+      }
+      const { data } = await axios.get("/api/bookings/user", {
+        headers: `Authorization : Bearer ${token}`,
+      });
       if (data.success) {
         sbk(data.book);
       } else {
