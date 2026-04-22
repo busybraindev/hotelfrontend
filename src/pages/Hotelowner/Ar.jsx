@@ -55,7 +55,9 @@ const Ar = () => {
       });
 
       const { data } = await axios.post("/api/room/", formData, {
-        headers: `Authorization : Bearer ${token}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       console.log(data);
 

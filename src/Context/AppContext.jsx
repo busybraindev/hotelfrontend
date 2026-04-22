@@ -32,7 +32,9 @@ export const AppProvider = ({ children }) => {
         return;
       }
       const { data } = await axios.get("/api/room/", {
-        headers: `Authorization : Bearer ${token}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       if (data.success) {
         srm(data.rooms);
@@ -54,7 +56,9 @@ export const AppProvider = ({ children }) => {
       }
 
       const { data } = await axios.get("/api/user", {
-        headers: `Authorization : Bearer ${token}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (data.success) {

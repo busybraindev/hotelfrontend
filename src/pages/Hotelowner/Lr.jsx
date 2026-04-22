@@ -15,8 +15,10 @@ const Lr = () => {
         console.log("Token not ready !!");
         return;
       }
-      const { data } = await axios.get("/api/room/owner", {
-        headers: `Authorization : Bearer ${token}`,
+      const { data } = await axios.get("/api/", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       console.log(data);
 
@@ -36,7 +38,11 @@ const Lr = () => {
       {
         roomId,
       },
-      { headers: `Authorization : Bearer ${token}` },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
     );
     if (data.success) {
       toast.success(data.message);

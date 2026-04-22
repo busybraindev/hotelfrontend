@@ -39,7 +39,11 @@ const Rd = () => {
           checkInDate: cd,
           checkOutDate: ct,
         },
-        { headers: `Authorization : Bearer ${token}` },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
       );
       console.log(data);
 
@@ -80,7 +84,11 @@ const Rd = () => {
             guests: gt,
             paymentMethod: "Pay At Hotel",
           },
-          { headers: `Authorization : Bearer ${token}` },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
         );
         console.log(data);
 

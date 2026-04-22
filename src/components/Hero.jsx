@@ -18,7 +18,11 @@ const Hero = () => {
     await axios.post(
       "/api/user/store",
       { recentSearchedCities: dt },
-      { headers: `Authorization : Bearer ${token}` },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
     );
     ssc((pv) => {
       const nw = [...pv, dt];

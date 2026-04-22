@@ -16,7 +16,9 @@ const Mybook = () => {
         return;
       }
       const { data } = await axios.get("/api/bookings/user", {
-        headers: `Authorization : Bearer ${token}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       if (data.success) {
         sbk(data.book);

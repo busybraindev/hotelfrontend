@@ -20,7 +20,9 @@ const Dh = () => {
         return;
       }
       const { data } = await axios.get("/api/bookings/hotel", {
-        headers: `Authorization : Bearer ${token}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (data.success) {
