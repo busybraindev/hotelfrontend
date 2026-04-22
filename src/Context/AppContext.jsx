@@ -24,7 +24,7 @@ export const AppProvider = ({ children }) => {
   // axios.defaults.withCredentials = true;
   const fr = async () => {
     try {
-      const token = getToken();
+      const token = await getToken();
       console.log(token);
 
       if (!token) {
@@ -45,7 +45,7 @@ export const AppProvider = ({ children }) => {
   };
   const ft = async () => {
     try {
-      const token = getToken();
+      const token = await getToken();
       console.log(token);
 
       if (!token) {
