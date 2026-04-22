@@ -21,10 +21,19 @@ export const AppProvider = ({ children }) => {
   const [shg, sshg] = useState(false);
   const [sc, ssc] = useState([]);
   const [rm, srm] = useState([]);
-  axios.defaults.withCredentials = true;
+  // axios.defaults.withCredentials = true;
   const fr = async () => {
     try {
-      const { data } = await axios.get("/api/room/");
+      const token = getToken();
+      console.log(token);
+
+      if (!token) {
+        console.log("Token not ready !!");
+        return;
+      }
+      const { data } = await axios.get("/api/room/", {
+        headers: `Authorization : Bearer ${token}`,
+      });
       if (data.success) {
         srm(data.rooms);
       } else {
@@ -36,7 +45,17 @@ export const AppProvider = ({ children }) => {
   };
   const ft = async () => {
     try {
-      const { data } = await axios.get("/api/user");
+      const token = getToken();
+      console.log(token);
+
+      if (!token) {
+        console.log("Token not ready !!");
+        return;
+      }
+
+      const { data } = await axios.get("/api/user", {
+        headers: `Authorization : Bearer ${token}`,
+      });
 
       if (data.success) {
         sis(data.role === "hotelOwner");
