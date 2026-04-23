@@ -29,6 +29,29 @@ const Mybook = () => {
       toast.error(err.message);
     }
   };
+  const hp = async (bookingId) => {
+    try {
+      const token = await getToken();
+      console.log(token);
+
+      if (!token) {
+        console.log("Token not ready !!");
+        return;
+      }
+      const { data } = await axios.post(
+        "/api/bookings/paystack-payment",
+        { bookingId, email: "busybraindev@gmail.com" },
+        { headers: { Authorization: `${token}` } },
+      );
+      if (data.success) {
+        window.location.href = data.session_url;
+      } else {
+        toast.error(data.message);
+      }
+    } catch (err) {
+      toast.error(err.message);
+    }
+  };
   useEffect(() => {
     if (user) {
       fb();
@@ -104,7 +127,12 @@ const Mybook = () => {
                 </p>
               </div>
               {!booking.isPaid && (
-                <button className="px-4 py-1.5 mt-4 text-xs border border-gray-400 rounded-full hover:bg-gray-50 transition-qll cursor-pointer">
+                <button
+                  onClick={() => {
+                    hp(booking._id);
+                  }}
+                  className="px-4 py-1.5 mt-4 text-xs border border-gray-400 rounded-full hover:bg-gray-50 transition-qll cursor-pointer"
+                >
                   Pay Now
                 </button>
               )}

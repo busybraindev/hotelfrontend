@@ -13,6 +13,7 @@ import Ar from "./pages/Hotelowner/Ar";
 import Lr from "./pages/Hotelowner/Lr";
 import { Toaster } from "react-hot-toast";
 import { useAppContext } from "./Context/AppContext.jsx";
+import Verify from "./components/Verify.jsx";
 const App = () => {
   const isOwner = useLocation().pathname.includes("owner");
   const { shg } = useAppContext();
@@ -27,6 +28,8 @@ const App = () => {
           <Route path="/rooms" element={<All></All>}></Route>
           <Route path="/rooms/:id" element={<Rd></Rd>}></Route>
           <Route path="/my-bookings" element={<Mybook></Mybook>}></Route>
+          <Route path="/verify" element={<Verify></Verify>}></Route>
+
           <Route path="/owner" element={<Lt></Lt>}>
             <Route index element={<Dh></Dh>}></Route>
             <Route path="add-room" element={<Ar></Ar>}></Route>
