@@ -15,7 +15,7 @@ const Lr = () => {
         console.log("Token not ready !!");
         return;
       }
-      const { data } = await axios.get("/api/", {
+      const { data } = await axios.get("/api/room", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
