@@ -34,7 +34,7 @@ const Lr = () => {
   };
   const tg = async (roomId) => {
     try {
-      const token = getToken();
+      const token = await getToken();
       if (!token) {
         console.log("token not ready!!!");
         return;
