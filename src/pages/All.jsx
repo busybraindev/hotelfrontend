@@ -171,7 +171,9 @@ const All = () => {
             <span onClick={() => sof(!ofl)} className="lg:hidden">
               {ofl ? "HIDE" : "SHOW"}
             </span>
-            <span className="hidden lg:block">CLEAR</span>
+            <span onClick={cf} className="hidden lg:block">
+              CLEAR
+            </span>
           </div>
         </div>
         <div

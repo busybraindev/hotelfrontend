@@ -33,22 +33,31 @@ const Lr = () => {
     }
   };
   const tg = async (roomId) => {
-    const { data } = await axios.post(
-      "/api/room/toogle-availability",
-      {
-        roomId,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
+    try {
+      const token = getToken();
+      if (!token) {
+        console.log("token not ready!!!");
+        return;
+      }
+      const { data } = await axios.post(
+        "/api/room/toogle-availability",
+        {
+          roomId,
         },
-      },
-    );
-    if (data.success) {
-      toast.success(data.message);
-      ft();
-    } else {
-      toast.error(data.message);
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      if (data.success) {
+        toast.success(data.message);
+        ft();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (err) {
+      toast.error(err.message);
     }
   };
   useEffect(() => {
